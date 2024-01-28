@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Notepad</h2>
+
+    <form id="noteForm">
+        <label for="noteInput">Add Note: </label>
+        <input type="text" id="noteInput" required>
+        <button type="button" onclick="addNote()">Add</button>
+    </form>
+
+    <h2>Notes</h2>
+
+    <ul id="noteList"></ul>
+
+    <script>
+        function addNote() {
+            var noteInput = document.getElementById("noteInput");
+            var noteList = document.getElementById("noteList");
+
+            if (noteInput.value.trim() !== "") {
+                var li = document.createElement("li");
+                li.innerHTML = noteInput.value + ' <button onclick="editNote(this)">Edit</button> <button onclick="deleteNote(this)">Delete</button>';
+                noteList.appendChild(li);
+
+                noteInput.value = "";
+            }
+        }
+
+        function editNote(button) {
+            var li = button.parentElement;
+            var newText = prompt("Edit note:", li.firstChild.nodeValue.trim());
+
+            if (newText !== null) {
+                li.firstChild.nodeValue = newText + ' <button onclick="editNote(this)">Edit</button> <button onclick="deleteNote(this)">Delete</button>';
+            }
+        }
+
+        function deleteNote(button) {
+            var li = button.parentElement;
+            li.remove();
+        }
+    </script>
+
+</body>
+</html>
